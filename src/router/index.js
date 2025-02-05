@@ -9,27 +9,27 @@ const router = createRouter({
       name: 'Home',
       component: HomeView
     },
-    {
-      path: '/Skills',
-      name: 'Skills',
-      component: () => import('../views/SkillsView.vue')
-    },
+    // {
+    //   path: '/Skills',
+    //   name: 'Skills',
+    //   component: () => import('../views/SkillsPage.vue')
+    // },
     
-    {
-      path: "/Projects",
-      name: "Projects",
-      component: () =>
-        import("../views/ProjectsView.vue"),
-    },
+    // {
+    //   path: "/Projects",
+    //   name: "Projects",
+    //   component: () =>
+    //     import("../views/ProjectsPage.vue"),
+    // },
     
-    {
+    // {
       
-        path: "/Contact",
-        name: "Contact",
-        component: () =>
-          import("../views/ContactView.vue"),
+    //     path: "/Contact",
+    //     name: "Contact",
+    //     component: () =>
+    //       import("../views/ContactPage.vue"),
       
-    }
+    // }
    ]
 });
 /*

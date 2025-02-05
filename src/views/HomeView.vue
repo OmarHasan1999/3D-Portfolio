@@ -1,109 +1,346 @@
 <template>
+  <div ref="theContainer" class="theContainer">
 
-  <div class="homePage" v-if="!showMenu">
+  <header-page class="headerPage" @toSkillsPage="goSkillsPage" 
+  @toProjectsPage="goProjectsPage" @toContactPage="goContactPage" 
+  @toHomePage="goHomePage" />
 
-    
-    <div class="homeSection d-flex flex-row justify-space-between">
+    <home-page class="homePage"/>
+  
+    <skills-page class="skillsPage"/>
 
-
-      <div class="one " style="margin-left: 30vh;gap: 2vh;">
-
-        <h1 style="color: aliceblue;">Hello I'm</h1>
-        <h2 style="color: aqua;font-size: 35px;">Omar Hasan</h2>
-        <h3 style="color: aliceblue;font-size: 20px;">Front end Web Developer</h3>
-        <p class="par">
-          Main area of my expertise is front-end development and everything related with this
-          side of web. HTML CSS JS, Now, I am currently learning on of the front-end frameworks,
-          Vue.js
-        </p>
-
-          <div class="d-flex align-center mt-8">
-
-            <button class="downloadButton" @click="downloadFile">DOWNLOAD CV 
-            <v-icon style="font-size: 20px;">mdi-tray-arrow-down</v-icon>
-            </button>
-            <a style="display: none;" ref="download"></a>
-
-
-            <div class="myLinks d-flex">
-                <a href="https://github.com/OmarHasan1999" target="blank"><v-icon>mdi-github</v-icon></a>
-                <a href="https://www.linkedin.com/in/omar-hasan-a633aa252/" target="blank"><v-icon>mdi-linkedin</v-icon></a>
-                <a href="https://www.facebook.com/omar.hamad.18294" target="blank"><v-icon>mdi-facebook</v-icon></a>
-                <a href="https://www.instagram.com/omar._.hasan/" target="blank"><v-icon>mdi-instagram</v-icon></a>
-
-            </div>
-
-          </div>
-
-
-      </div>
-      
-
-    </div>
-
-    <!-- The container for the 3D model -->
-    <div class="modelImage"></div>
-
+    <projects-page class="projectsPage"/>
+  
+    <contact-page class="contactPage"/>
+  
   </div>
   
-  
-
 </template>
 
-
 <script>
-import cv from "../assets/OmarHasan.pdf"
-import ScrollReveal from 'scrollreveal';
-import { imageModel } from "../js/imageModel";
-import { nextTick } from "vue";
-
+import * as THREE from 'three'
+import gsap from 'gsap'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
+import { onMounted, ref } from 'vue';
+import HeaderPage from '../components/HeaderPage.vue';
+import { nextTick } from 'vue';
+import HomePage from '../components/HomePage.vue';
+import SkillsPage from '../components/SkillsPage.vue';
+import ProjectsPage from '../components/ProjectsPage.vue';
+import ContactPage from '../components/ContactPage.vue';
 
 export default {
-  data() {
-    return {
-      fileName : "OmarHasan.pdf",
-      pathName: cv,
-    }
-  },
-  methods: {
-    downloadFile(){
-        const download = this.$refs.download
-        download.href = this.pathName
-        download.download = this.fileName
-        download.click()
-    },
+  components: { HeaderPage, HomePage, SkillsPage, ProjectsPage, ContactPage },
+  setup(){
+    const theContainer = ref(null);
+    const headerObjectRef = ref(null);
+    let scene, camera, renderer, labelRender
 
-  },
-
-  mounted() {
-    // run threejs code 
-    nextTick(() => {
-      const container = document.querySelector(".modelImage")
-      if(container){
-        this.stopModelAnimation = imageModel()
-      }
-      else(console.log("the error is ..."))
-    })
-
-    /****scroll reveal*****/   
-    ScrollReveal().reveal(".homeSection", {
-      origin: "left",
-      distance: "50px",
-      duration: "1000",
-      easing: "ease-in-out"
-    }
-  )
-    
-  },
-  beforeUnmount() {
-    if (this.stopModelAnimation) {
-      this.stopModelAnimation();
-    }
-  },
-
-  inject : ['showMenu']
+    const moveCamera = (x, y, z) => {
+        gsap.to(camera.position, {
+            x,
+            y,
+            z,
+            duration : 3,
+        }
+    )
 }
 
+    const rotateCamera = (x, y, z) => {
+        gsap.to(camera.rotation, {
+            x,
+            y,
+            z,
+            duration : 3.2,
+        })}
+  
+        const goSkillsPage = () => {
+            if(!camera) return
+            // moveCamera(10, 13, 2)
+            // rotateCamera(0.5, 0 , -0.3)
+            moveCamera(-38, 31, -8)
+            rotateCamera(-0.6, 0, 0)
+            if (headerObjectRef.value) {
+                // headerObjectRef.value.position.set(11.2, 20.5, -3.8);
+                 headerObjectRef.value.position.set(-38, 25, -39);
+    }
+    }
+
+        const goProjectsPage = () => {
+            if(!camera) return
+            moveCamera(-1.8, -0.5, 5)
+            rotateCamera(0.2, 0.5 , 0)
+            if (headerObjectRef.value) {
+                headerObjectRef.value.position.set(-4.3, 2.6, 1);
+    }
+    }
+
+
+    const goContactPage = () => {
+            if(!camera) return
+            moveCamera(-1.8, -11.5, 5)
+            rotateCamera(0.2, 0.5 , 0)
+            if (headerObjectRef.value) {
+                headerObjectRef.value.position.set(-7.3, -4.4, -4);
+            
+    }
+    }
+
+    const goHomePage = () => {
+            if(!camera) return
+            if(camera.position.y === 0){
+              console.log("Home page")
+            }else{
+              moveCamera(-1.7, 0, 8.7);
+              rotateCamera(0, 4.7, 0);
+              if (headerObjectRef.value) {
+                headerObjectRef.value.position.set(38, 17, 9);
+            }
+           
+    }
+    }
+
+
+    onMounted(() => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(-1.7, 0, 8.7)
+      camera.lookAt(1.7, 0, 8.7)
+      
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      theContainer.value.appendChild(renderer.domElement);
+      
+      // lights
+      const ambientLight = new THREE.AmbientLight(0xffffff, 2);
+      scene.add(ambientLight);
+
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+      directionalLight.position.set(2,4,5);
+      scene.add(directionalLight);
+
+      const light1 = new THREE.PointLight(0xffffff, 2);
+      light1.position.set(0, 3, 3);
+      scene.add(light1);
+
+      const light2 = new THREE.PointLight(0xffffff, 2);
+      light2.position.set(-3, -3, 3);
+      scene.add(light2);
+
+      labelRender = new CSS2DRenderer();
+      labelRender.setSize(window.innerWidth, window.innerHeight);
+      labelRender.domElement.style.position = 'absolute';
+      labelRender.domElement.style.pointerEvents = 'none';
+      labelRender.domElement.style.top = '0px';
+      theContainer.value.appendChild(labelRender.domElement);
+
+      nextTick(() => {
+        // add header to the scene
+          const header = document.querySelector(".headerPage")
+          const headerObject = new CSS2DObject(header);
+          headerObject.position.set(38, 17, 8.7);
+          scene.add(headerObject);
+          headerObjectRef.value = headerObject;
+
+        // add home page to scene
+          const home = document.querySelector(".homePage")
+          const homeObject = new CSS2DObject(home);
+          homeObject.position.set(38, 2.3, 8.7);
+          scene.add(homeObject);
+
+        // add skills to scene
+          const skillsPage = document.querySelector(".skillsPage")
+          const skillsObj = new CSS2DObject(skillsPage)
+          skillsObj.position.set(0, -280, -300)
+          scene.add(skillsObj)
+
+          // add projects page to scene
+          const projectsPage = document.querySelector(".projectsPage")
+          const projectsObject = new CSS2DObject(projectsPage);
+          projectsObject.position.set(-6.7, 1.6, -4);
+          scene.add(projectsObject);
+      })
+
+          // add contact to scene
+            const contact = document.querySelector(".contactPage")
+            const contactObj = new CSS2DObject(contact)
+            contactObj.position.set(-6.4,-9.6,-4)
+            scene.add(contactObj)
+      
+      let laptop
+      const theObj = new URL("../assets/3d_clipart_-_webdev.glb",import.meta.url)
+      const theObjLoad = new GLTFLoader()
+      theObjLoad.load(theObj.href,(gltf) => {
+        laptop = gltf.scene
+        laptop.scale.set(1.2, 1.3, 1.2)
+        laptop.position.set(25, -4.9, 22);
+        laptop.rotation.y = 4.3
+        scene.add(laptop);
+
+})
+
+      let facebook
+      const thefacebook = new URL("../assets/3d icon facebook.glb",import.meta.url)
+      const theObjLoad_2 = new GLTFLoader()
+      theObjLoad_2.load(thefacebook.href,(gltf) => {
+        facebook = gltf.scene
+        facebook.scale.set(0.54, 0.54, 0.54)
+        facebook.position.set(30, -9.6, -1.2)
+        facebook.rotation.y = 4.7
+        scene.add(facebook);
+
+})
+
+      let github
+      const thegithub = new URL("../assets/github.glb",import.meta.url)
+      const theObjLoad_3 = new GLTFLoader()
+      theObjLoad_3.load(thegithub.href,(gltf) => {
+        github = gltf.scene
+        github.scale.set(0.54, 0.54, 0.54)
+        github.position.set(30, -9.6, 0.1);
+        github.rotation.y = 4.7
+        scene.add(github);
+})
+
+      let linkedin
+      const thelinkedin = new URL("../assets/linkedin.glb",import.meta.url)
+      const theObjLoad_4 = new GLTFLoader()
+      theObjLoad_4.load(thelinkedin.href,(gltf) => {
+        linkedin = gltf.scene
+        linkedin.scale.set(0.54, 0.54, 0.54)
+        linkedin.position.set(30, -9.6, 1.4);
+        linkedin.rotation.y = 4.7
+        scene.add(linkedin);
+})
+
+      let whatsapp
+      const thewhatsapp = new URL("../assets/3d icon whatsapp.glb",import.meta.url)
+      const theObjLoad_5 = new GLTFLoader()
+      theObjLoad_5.load(thewhatsapp.href,(gltf) => {
+        whatsapp = gltf.scene
+        whatsapp.scale.set(0.54, 0.54, 0.54)
+        whatsapp.position.set(30, -9.6, 2.8);
+        whatsapp.rotation.y = 4.7
+        scene.add(whatsapp);
+})
+
+
+let web
+      const theWeb = new URL("../assets/logotipos_3d_-_aprenda_programar.glb",import.meta.url)
+      const theWebLoad = new GLTFLoader()
+      theWebLoad.load(theWeb.href,(gltf) => {
+        web = gltf.scene
+        web.scale.set(0.1, 0.1, 0.1)
+        web.position.set(2,0,10);
+        // web.rotation.y = 4.7
+        scene.add(web);
+})
+
+      let background, planet_2,planet
+
+    // loading 3D background object
+    const house = new URL("../assets/Nebula HDRi 2.glb", import.meta.url)
+    const houseLoader = new GLTFLoader()
+    houseLoader.load(house.href, (gltf) => {
+        background = gltf.scene
+        background.scale.set(70,70,70)
+        background.position.set(20, 0, 5);
+        background.rotation.set(3,1,2)
+        scene.add(background)
+
+        planet = background.clone()
+        planet.position.set(-3.1, 2, -5)
+        planet.scale.set(2.5, 15.5, 10)
+        planet.rotation.set(5,-2,6)
+        scene.add(planet)
+
+        planet_2 = background.clone()
+        planet_2.position.set(20, 5, 25)
+        planet_2.scale.set(1,1,1)
+        planet_2.rotation.set(5,5,5)
+        scene.add(planet_2)
+})
+
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+
+      window.addEventListener('mousemove', (e) => {
+          mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+          mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+
+      if (laptop) {
+        const intersects = raycaster.intersectObject(laptop, true);
+
+        if (intersects.length > 0) {
+            gsap.to(laptop.rotation, {
+                y: laptop.rotation.y + 1.8,
+                duration : 0.7,
+                ease : "power1.inOut"
+            })
+        }
+    }
+        const objects = [facebook, github, linkedin, whatsapp] 
+
+        const intersects_2 = raycaster.intersectObjects(objects, true);
+            if(intersects_2.length > 0){
+                document.body.style.cursor = "pointer"
+    
+            //     window.open('https://www.facebook.com/omar.hamad.18294', '_blank');
+            }else{
+                document.body.style.cursor = "default"
+            }
+  })
+      
+      let angle = 0
+      const animate = () => {
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+        labelRender.render(scene, camera);
+
+        if (facebook && github && linkedin && whatsapp) {
+        angle += 0.008;
+        const max = Math.PI / 45;
+        const min = -Math.PI / 1.7;
+    
+        facebook.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
+        github.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
+        linkedin.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
+        whatsapp.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
+      }
+
+        if(laptop){
+            laptop.rotation.y += 0.001
+        }
+
+        if(background){
+            background.rotation.z += 0.0005
+        }
+        if(planet_2){
+            planet_2.rotation.x += 0.001
+            planet_2.rotation.y += 0.001
+        }
+      }
+      animate();
+
+      // responsive
+    window.addEventListener("resize", () => {
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    labelRender.setSize(window.innerWidth, window.innerHeight)
+
+})
+    });
+
+    
+    return { theContainer, moveCamera, rotateCamera, goSkillsPage,
+            goProjectsPage, goContactPage, goHomePage
+     };
+  
+  }
+}
 
 </script>
 
@@ -153,7 +390,7 @@ export default {
     border-left-width: 2px;
     border-right-width: 2px;
   }
-  .modelImage{
+  .backgroundImage{
     position: absolute;
     top: 0%;
     left: 5%;
@@ -216,7 +453,7 @@ export default {
     border-right-width: 2px;
     margin-top: -3vh;
   }
-  .modelImage{
+  .backgroundImage{
     margin-left: -12vh;
     margin-top: -15vh;
   }
@@ -310,7 +547,7 @@ export default {
       margin-top: 7vh;
       margin-left: -35vh;
   }
-  .modelImage{
+  .backgroundImage{
     margin-bottom: 50vh;
   }
 
@@ -357,7 +594,7 @@ export default {
     .downloadButton{
       margin-left: 9vh;
   }
-  .modelImage{
+  .backgroundImage{
     margin-top: -20vh;
   }
   }
@@ -409,7 +646,7 @@ export default {
    .myLinks{
       padding-left: 2vh;
   } 
-  .modelImage{
+  .backgroundImage{
     margin-top: -42vh;
   }
   }
@@ -458,7 +695,7 @@ export default {
     .downloadButton{
       margin-left: -12vh;
   }
-  .modelImage{
+  .backgroundImage{
     margin-top: -43vh;
   }
   

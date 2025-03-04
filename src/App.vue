@@ -27,6 +27,8 @@ provide("scrollDown", scrollDown)
   padding: 0;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  
+
 }
 
   body{
@@ -37,13 +39,5 @@ provide("scrollDown", scrollDown)
     margin: 0%;
     font-family: "Montserrat", sans-serif;
 
-}
-
-.stars{
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 100%;
-  min-height: 100vh;
 }
 </style>

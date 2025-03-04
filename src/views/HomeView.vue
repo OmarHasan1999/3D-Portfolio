@@ -1,20 +1,25 @@
 <template>
-  <div ref="theContainer" class="theContainer">
 
-  <header-page class="headerPage" @toSkillsPage="goSkillsPage" 
-  @toProjectsPage="goProjectsPage" @toContactPage="goContactPage" 
-  @toHomePage="goHomePage" />
+    <div ref="theContainer" class="theContainer">
+
+    <header-page class="headerPage" @toSkillsPage="goSkillsPage"
+      @toProjectsPage="goProjectsPage" @toContactPage="goContactPage"
+      @toHomePage="goHomePage" />
 
     <home-page class="homePage"/>
-  
+
     <skills-page class="skillsPage"/>
 
     <projects-page class="projectsPage"/>
-  
+
     <contact-page class="contactPage"/>
-  
-  </div>
-  
+    </div>
+
+    <div class="loadingPage">
+        <h1 class="heading">Welcome To My Website!</h1>
+    </div>
+
+
 </template>
 
 <script>
@@ -30,11 +35,14 @@ import SkillsPage from '../components/SkillsPage.vue';
 import ProjectsPage from '../components/ProjectsPage.vue';
 import ContactPage from '../components/ContactPage.vue';
 
+
 export default {
   components: { HeaderPage, HomePage, SkillsPage, ProjectsPage, ContactPage },
   setup(){
     const theContainer = ref(null);
     const headerObjectRef = ref(null);
+    const homeObjectRef = ref(null);
+    const skillsObjectRef = ref(null);
     let scene, camera, renderer, labelRender
 
     const moveCamera = (x, y, z) => {
@@ -54,17 +62,15 @@ export default {
             z,
             duration : 3.2,
         })}
-  
+
         const goSkillsPage = () => {
             if(!camera) return
-            // moveCamera(10, 13, 2)
-            // rotateCamera(0.5, 0 , -0.3)
             moveCamera(-38, 31, -8)
             rotateCamera(-0.6, 0, 0)
             if (headerObjectRef.value) {
-                // headerObjectRef.value.position.set(11.2, 20.5, -3.8);
-                 headerObjectRef.value.position.set(-38, 25, -39);
-    }
+                headerObjectRef.value.position.set(-38, 25, -39);
+              }
+            
     }
 
         const goProjectsPage = () => {
@@ -80,11 +86,11 @@ export default {
     const goContactPage = () => {
             if(!camera) return
             moveCamera(-1.8, -11.5, 5)
-            rotateCamera(0.2, 0.5 , 0)
+            rotateCamera(0, 0.5 , 0)
             if (headerObjectRef.value) {
-                headerObjectRef.value.position.set(-7.3, -4.4, -4);
-            
-    }
+                headerObjectRef.value.position.set(-6.8, -7, -4);
+            }
+
     }
 
     const goHomePage = () => {
@@ -97,21 +103,27 @@ export default {
               if (headerObjectRef.value) {
                 headerObjectRef.value.position.set(38, 17, 9);
             }
-           
+
     }
     }
-
-
     onMounted(() => {
+      setTimeout(() => {
+        const mainContainer = document.querySelector(".theContainer")
+        const loading = document.querySelector(".loadingPage")
+        mainContainer.style.display = "block"
+        loading.style.display = "none"
+      }, 3000);
+
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
       camera.position.set(-1.7, 0, 8.7)
       camera.lookAt(1.7, 0, 8.7)
-      
+
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
       theContainer.value.appendChild(renderer.domElement);
-      
+
+
       // lights
       const ambientLight = new THREE.AmbientLight(0xffffff, 2);
       scene.add(ambientLight);
@@ -128,6 +140,7 @@ export default {
       light2.position.set(-3, -3, 3);
       scene.add(light2);
 
+
       labelRender = new CSS2DRenderer();
       labelRender.setSize(window.innerWidth, window.innerHeight);
       labelRender.domElement.style.position = 'absolute';
@@ -135,109 +148,57 @@ export default {
       labelRender.domElement.style.top = '0px';
       theContainer.value.appendChild(labelRender.domElement);
 
+
       nextTick(() => {
         // add header to the scene
           const header = document.querySelector(".headerPage")
           const headerObject = new CSS2DObject(header);
-          headerObject.position.set(38, 17, 8.7);
           scene.add(headerObject);
+          headerObject.position.set(38, 17.2, 8.7);
           headerObjectRef.value = headerObject;
+          //adjustModelScale()
 
         // add home page to scene
           const home = document.querySelector(".homePage")
           const homeObject = new CSS2DObject(home);
-          homeObject.position.set(38, 2.3, 8.7);
           scene.add(homeObject);
+          homeObjectRef.value = homeObject
+          adjustModelScale()
 
         // add skills to scene
           const skillsPage = document.querySelector(".skillsPage")
           const skillsObj = new CSS2DObject(skillsPage)
-          skillsObj.position.set(0, -280, -300)
           scene.add(skillsObj)
+          skillsObjectRef.value = skillsObj
+          adjustModelScale()
 
           // add projects page to scene
           const projectsPage = document.querySelector(".projectsPage")
           const projectsObject = new CSS2DObject(projectsPage);
           projectsObject.position.set(-6.7, 1.6, -4);
           scene.add(projectsObject);
-      })
 
           // add contact to scene
-            const contact = document.querySelector(".contactPage")
-            const contactObj = new CSS2DObject(contact)
-            contactObj.position.set(-6.4,-9.6,-4)
-            scene.add(contactObj)
-      
+          const contact = document.querySelector(".contactPage")
+          const contactObj = new CSS2DObject(contact)
+          contactObj.position.set(-6.4,-11.4,-4)
+          scene.add(contactObj)
+      })
+
+
       let laptop
       const theObj = new URL("../assets/3d_clipart_-_webdev.glb",import.meta.url)
       const theObjLoad = new GLTFLoader()
       theObjLoad.load(theObj.href,(gltf) => {
         laptop = gltf.scene
-        laptop.scale.set(1.2, 1.3, 1.2)
-        laptop.position.set(25, -4.9, 22);
-        laptop.rotation.y = 4.3
+        adjustModelScale()
         scene.add(laptop);
 
 })
 
-      let facebook
-      const thefacebook = new URL("../assets/3d icon facebook.glb",import.meta.url)
-      const theObjLoad_2 = new GLTFLoader()
-      theObjLoad_2.load(thefacebook.href,(gltf) => {
-        facebook = gltf.scene
-        facebook.scale.set(0.54, 0.54, 0.54)
-        facebook.position.set(30, -9.6, -1.2)
-        facebook.rotation.y = 4.7
-        scene.add(facebook);
-
-})
-
-      let github
-      const thegithub = new URL("../assets/github.glb",import.meta.url)
-      const theObjLoad_3 = new GLTFLoader()
-      theObjLoad_3.load(thegithub.href,(gltf) => {
-        github = gltf.scene
-        github.scale.set(0.54, 0.54, 0.54)
-        github.position.set(30, -9.6, 0.1);
-        github.rotation.y = 4.7
-        scene.add(github);
-})
-
-      let linkedin
-      const thelinkedin = new URL("../assets/linkedin.glb",import.meta.url)
-      const theObjLoad_4 = new GLTFLoader()
-      theObjLoad_4.load(thelinkedin.href,(gltf) => {
-        linkedin = gltf.scene
-        linkedin.scale.set(0.54, 0.54, 0.54)
-        linkedin.position.set(30, -9.6, 1.4);
-        linkedin.rotation.y = 4.7
-        scene.add(linkedin);
-})
-
-      let whatsapp
-      const thewhatsapp = new URL("../assets/3d icon whatsapp.glb",import.meta.url)
-      const theObjLoad_5 = new GLTFLoader()
-      theObjLoad_5.load(thewhatsapp.href,(gltf) => {
-        whatsapp = gltf.scene
-        whatsapp.scale.set(0.54, 0.54, 0.54)
-        whatsapp.position.set(30, -9.6, 2.8);
-        whatsapp.rotation.y = 4.7
-        scene.add(whatsapp);
-})
 
 
-let web
-      const theWeb = new URL("../assets/logotipos_3d_-_aprenda_programar.glb",import.meta.url)
-      const theWebLoad = new GLTFLoader()
-      theWebLoad.load(theWeb.href,(gltf) => {
-        web = gltf.scene
-        web.scale.set(0.1, 0.1, 0.1)
-        web.position.set(2,0,10);
-        // web.rotation.y = 4.7
-        scene.add(web);
-})
-
-      let background, planet_2,planet
+      let background, planet_2,planet, earthPlanet
 
     // loading 3D background object
     const house = new URL("../assets/Nebula HDRi 2.glb", import.meta.url)
@@ -247,20 +208,28 @@ let web
         background.scale.set(70,70,70)
         background.position.set(20, 0, 5);
         background.rotation.set(3,1,2)
+        adjustModelScale()
         scene.add(background)
 
         planet = background.clone()
-        planet.position.set(-3.1, 2, -5)
-        planet.scale.set(2.5, 15.5, 10)
-        planet.rotation.set(5,-2,6)
+        adjustModelScale()
         scene.add(planet)
 
         planet_2 = background.clone()
-        planet_2.position.set(20, 5, 25)
-        planet_2.scale.set(1,1,1)
-        planet_2.rotation.set(5,5,5)
+        adjustModelScale()
         scene.add(planet_2)
+
 })
+
+    const earth = new URL("../assets/planet_earth.glb", import.meta.url)
+    const earthLoader = new GLTFLoader()
+    earthLoader.load(earth.href, (gltf) => {
+        earthPlanet = gltf.scene
+        scene.add(earthPlanet)
+        adjustModelScale()
+
+    })
+
 
       const raycaster = new THREE.Raycaster();
       const mouse = new THREE.Vector2();
@@ -280,39 +249,130 @@ let web
                 ease : "power1.inOut"
             })
         }
-    }
-        const objects = [facebook, github, linkedin, whatsapp] 
+    }  
 
-        const intersects_2 = raycaster.intersectObjects(objects, true);
-            if(intersects_2.length > 0){
-                document.body.style.cursor = "pointer"
-    
-            //     window.open('https://www.facebook.com/omar.hamad.18294', '_blank');
-            }else{
-                document.body.style.cursor = "default"
-            }
   })
-      
-      let angle = 0
+
+
+  function adjustModelScale() {
+  if (!planet) return;
+  if (!planet_2) return;
+  if(!homeObjectRef.value) return
+  if(!skillsObjectRef.value) return
+
+  if (window.innerWidth <= 320) {
+    laptop.position.set(8, -3.4, 9.3);
+    laptop.rotation.y = 4.3
+    laptop.scale.set(0.2, 0.3, 0.2);
+
+    planet.position.set(4.7, 2, -5)
+    planet.scale.set(2.5, 15.5, 10)
+    planet.rotation.set(5,-2,6)
+
+    planet_2.position.set(20, 6, 13)
+    planet_2.scale.set(1,1,1)
+    planet_2.rotation.set(5,5,5)
+
+    earthPlanet.position.set(-7, -15, -4.8);
+    earthPlanet.scale.set(2.4, 2.5, 2.4)
+  } 
+
+  else if (window.innerWidth <= 375) {
+    laptop.scale.set(0.6, 0.7, 0.6); 
+    laptop.position.set(22, -8.2, 10.5);
+
+    planet.position.set(4.7, 2, -6.5)
+    planet.scale.set(3.6, 16.6, 11.3)
+    planet.rotation.set(5,-2,6)
+
+    planet_2.position.set(20, 6, 14)
+    planet_2.scale.set(0.8,0.8,0.8)
+
+    earthPlanet.position.set(-7, -15.5, -5.4);
+    earthPlanet.scale.set(2.6, 2.6, 2.6)
+
+  }
+
+  else if(window.innerWidth <= 450){
+    planet_2.position.set(20, 6, 14)
+    planet_2.scale.set(0.8,0.8,0.8)
+    laptop.scale.set(0.6, 0.7, 0.6); 
+    laptop.position.set(22, -5, 14);
+    earthPlanet.position.set(-7, -15.9, -5);
+
+  }
+
+  else if(window.innerWidth <= 617){
+    laptop.scale.set(0.7, 0.9, 0.7); 
+    laptop.position.set(22, -3, 16);
+    planet_2.position.set(20, 6, 17)
+  }
+
+  else if(window.innerWidth <= 768){
+    laptop.scale.set(0.9, 1, 0.9); 
+    laptop.position.set(22, -3, 17);
+    planet_2.position.set(20, 6, 20)
+  }
+
+  else if(window.innerWidth <= 991){
+    skillsObjectRef.value.position.set(40, -230, -300)
+    planet_2.position.set(20, 6, 20)
+    laptop.position.set(22, -3.4, 18);
+    laptop.scale.set(0.9, 1.1, 1.1); 
+  }
+  else if(window.innerWidth <= 1024){ 
+    laptop.position.set(22, -3.4, 18.8);
+    laptop.scale.set(1, 1.1, 1); 
+    planet_2.position.set(22, 6, 22)
+    skillsObjectRef.value.position.set(30, -223, -300)
+
+  }
+
+  else if(window.innerWidth <= 1200){ 
+  homeObjectRef.value.position.set(38, 2.3, 11);
+  skillsObjectRef.value.position.set(0, -230, -300)
+  laptop.position.set(22, -4, 20.4);
+  laptop.scale.set(1.1, 1.2, 1.1); 
+  planet_2.position.set(22, 6, 25)
+
+  }
+  
+  else {
+    laptop.position.set(25, -4.9, 22);
+    laptop.scale.set(1.2, 1.3, 1.2); 
+    laptop.rotation.y = 4.3
+
+    planet.position.set(-3.1, 2, -5)
+    planet.scale.set(2.5, 15.5, 10)
+    planet.rotation.set(5,-2,6)
+
+    planet_2.position.set(20, 5, 25)
+    planet_2.scale.set(1,1,1)
+    planet_2.rotation.set(5,5,5)
+
+    earthPlanet.scale.set(3, 3, 3)
+    earthPlanet.position.set(-7, -15.9, -6);
+
+    homeObjectRef.value.position.set(38, 2.3, 8.7);
+    skillsObjectRef.value.position.set(0, -260, -300)
+
+  }
+}
+
       const animate = () => {
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
         labelRender.render(scene, camera);
 
-        if (facebook && github && linkedin && whatsapp) {
-        angle += 0.008;
-        const max = Math.PI / 45;
-        const min = -Math.PI / 1.7;
-    
-        facebook.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
-        github.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
-        linkedin.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
-        whatsapp.rotation.y = (max - min) / 12 * Math.sin(angle) + (max + min) / 1;
-      }
 
         if(laptop){
             laptop.rotation.y += 0.001
         }
+
+        if(earthPlanet){
+            earthPlanet.rotation.y += 0.001
+        }
+        
 
         if(background){
             background.rotation.z += 0.0005
@@ -330,21 +390,67 @@ let web
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
     labelRender.setSize(window.innerWidth, window.innerHeight)
-
+    renderer.setPixelRatio(window.devicePixelRatio);
+    if(laptop && planet && planet_2 && homeObjectRef &&
+      skillsObjectRef
+    ) adjustModelScale()
 })
-    });
+})
 
-    
     return { theContainer, moveCamera, rotateCamera, goSkillsPage,
             goProjectsPage, goContactPage, goHomePage
      };
-  
+
   }
-}
+  }
 
 </script>
 
 <style lang="css">
+
+.theContainer {
+  display:none
+}
+
+.loadingPage{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    color: white;
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    line-height: 90vh;
+    z-index: 999;
+}
+
+@keyframes heading{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+.heading{
+    /* opacity: 0; */
+    animation: heading 1.3s ease-in forwards;
+}
+
+/* Responsive section */
+@media (max-width:320px){
+  .heading{
+    font-size: 20px;
+}
+}
+
+@media (max-width:375px){
+  .heading{
+    font-size: 20px;
+}
+}
 
   .homePage{
     width:100%;
@@ -399,10 +505,10 @@ let web
   @media (max-width:1200px){
     .homePage{
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
-    
+
   .homeSection{
     padding-left: -15vh;
     margin-left: -10vh;
@@ -462,7 +568,7 @@ let web
   @media (max-width:1024px){
     .homePage{
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
   }
@@ -479,7 +585,7 @@ let web
       justify-content: center;
       flex-direction: column;
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
   .one h1{
@@ -514,7 +620,7 @@ let web
       margin: 0%;
       padding: 0%;
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
     .par{
@@ -528,7 +634,7 @@ let web
      .one h1{
       margin-left: 28vh;
     }
-      
+
     .one h2{
       font-size: 30px;
       margin-left: 26vh;
@@ -569,7 +675,7 @@ let web
       margin: 0%;
       padding: 0%;
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
     .one h1{
@@ -614,7 +720,7 @@ let web
       margin: 0%;
       padding: 0%;
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
     .one h1{
@@ -645,7 +751,7 @@ let web
   }
    .myLinks{
       padding-left: 2vh;
-  } 
+  }
   .backgroundImage{
     margin-top: -42vh;
   }
@@ -666,7 +772,7 @@ let web
       margin: 0%;
       padding: 0%;
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
     .one h1{
@@ -698,7 +804,7 @@ let web
   .backgroundImage{
     margin-top: -43vh;
   }
-  
+
   }
 
 
@@ -717,7 +823,7 @@ let web
       margin: 0%;
       padding: 0%;
       overflow: hidden;
-      overflow-x: hidden; 
+      overflow-x: hidden;
       overflow-y: hidden;
     }
     .one h1{

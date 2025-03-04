@@ -1,6 +1,6 @@
 <template>
 
-    <div class="contact" v-if="!showMenu">
+    <div class="contact">
 
             <div class="contactSection d-flex flex-row align-center">
 
@@ -49,7 +49,7 @@
 
                     <div class="theIcon">
                         <h3>Address</h3>
-                        <p>SeferPaşa, Gaziantep, Turkey</p>
+                        <p>Turkey, Gaziantep, SeferPaşa</p>
                     </div>
 
     </div>
@@ -80,12 +80,10 @@
 
       methods: {
             async sendMessage() {
-            // Initialize EmailJS
-            emailjs.init('Pd15F-VYaJLkFTBNR'); // Replace with your own user ID
+            emailjs.init('Pd15F-VYaJLkFTBNR'); 
 
-            // EmailJS parameters
-            const serviceID = 'default_service'; // Replace with your service ID
-            const templateID = 'template_i3wazzi'; // Replace with your template ID
+            const serviceID = 'default_service'; 
+            const templateID = 'template_i3wazzi'; 
             const templateParams = {
               from_name: `${this.form.firstName} ${this.form.lastName}`,
               to_email: this.form.email,
@@ -113,51 +111,15 @@
       },
 
       mounted() {
-        /****scroll reveal*****/
-    //     ScrollReveal().reveal(".contactSection", {
-    //       origin: "none",
-    //       distance: "0px",
-    //       opacity:0,
-    //       duration: "700",
-    //       easing: "ease-in-out",
-    //     }
-    //   ),
-    //   ScrollReveal().reveal(".theMessage", {
-    //       origin: "top",
-    //       distance: "0px",
-    //       duration: "2000",
-    //       easing: "ease-in-out",
-    //     }
-    // )
       },
-
-
-
-      inject : ['showMenu', 'scrollDown'],
     }
     </script>
 
 
     <style lang="css">
-    .theMessage {
-  position: fixed; /* Use fixed positioning */
-  border: 1px solid white;
-  border-radius: 10px;
-  padding: 5px 40px;
-  top: -50px; /* Start off-screen */
-  left: 23%;
-  color: white;
-  background-color: transparent;
-  transition: top 0.5s ease; /* Smooth transition for the top property */
-}
-
-.theMessage.show {
-  top: 5%; /* Move into view */
-}
     .contact{
         width:100%;
         height: 100vh;
-        position: absolute;
         padding-top: 26vh;
         scroll-behavior: smooth;
     }
@@ -274,26 +236,7 @@
         color:rgba(255, 255, 255, 0.76);
         font-size: 20px;
     }
-    .phoneNum{
-        position: absolute;
-        right: 16%;
-        top: 37.2%;
-    }
-    .emailName h3{
-        position: absolute;
-        right: 24.2%;
-        top: 54.6%;
-    }
-    .emailName p{
-        position: absolute;
-        right: 6%;
-        top: 58.2%;
-    }
-    .addressName{
-        position: absolute;
-        right: 5%;
-        top: 71%;
-    }
+    
     /* Chrome, Safari, Edge, Opera */
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -308,29 +251,28 @@
 
 
 
-
+/* responsive */
 @media (max-width:1200px){
+    .inputs{
+        margin-top: -4vh;
+    }
     .inputOne{
-        width: 38.4vh;
+        width: 44.2vh;
     }
-    .contactTwo{
-       margin-left: 12vh;
-       margin-bottom: 32vh;
-    }
-    .emailName p{
-        margin-right: -3vh;
-    }
-    .emailName h3{
-        margin-right: 2vh;
-    }
-    .addressName{
-        margin-right: -2vh;
+    .contactOne{
+        display: flex;
+        flex-direction: column;
+        width: 100vh;
+        height: 64vh;
+        border-radius: 7px;
+        margin-left: 30vh;
+        gap: 2vh;
     }
 }
 
 @media (max-width:1024px){
     .contactOne{
-        margin-left: 10vh;
+        margin-left: 20vh;
     }
     .contactTwo{
        margin-left: 7vh;
@@ -347,185 +289,176 @@
 }
 
 @media (max-width:991px){
-    .contactOne{
-        margin-left: 5vh;
-    }
-}
-@media (max-width:768px){
     .contact{
-        width: 100%;
-        min-height: 100vh;
-        overflow: hidden;
-        overflow-x: hidden;
-        overflow-y: auto;
+        padding-top: 24vh;
     }
-    .contactOne{
-        margin-top: -60vh;
-    }
+    .theIcon p{
+            font-size: 18px;
+        }
+}
+
+@media (max-width:768px){
     .contactTwo{
-        position: absolute;
-        top: 85%;
-        left: 12%;
+       margin-left: -16vh;
+       font-size: 4.5vh;
     }
-    .contactTwo .email{
-        margin-top: 7vh;
+    .iconContact{
+        font-size: 6vh !important;
     }
-    .contactTwo .address{
-        margin-top: 18vh;
+    .theIcon{
+        margin-left: -2vh;
     }
-    .phoneNum{
-        margin-top: 49.4vh;
-        margin-right: 46.7vh;
+    .theIcon p{
+        font-size: 12px !important;
     }
-    .emailName h3{
-        margin-top: 45.7vh;
-        margin-right: 55vh;
+    .contactOne h1{
+        font-size: 25px;
+        font-weight: 800;
     }
-    .emailName p{
-        padding-top: 46vh;
-        margin-right: 37vh;
+    .inputOne{
+        width: 30vh;
+        height: 7vh;
+        font-size: 14px;
     }
-    .addressName{
-        margin-top: 41.5vh;
-        margin-right: 36vh;
+    .textArea{
+        width: 65vh;
+        height: 20vh;
     }
-    .contactSection{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 110vh;
+    .inputs button{
+        padding: 4px 16px;
+        font-weight: 600;
     }
 }
 
 @media (max-width:617px){
-    .phoneNum{
-        margin-top: 49.4vh;
-        margin-right: 37vh;
+    .contactOne h1{
+        font-size: 21px;
+        font-weight: 800;
     }
-    .emailName h3{
-        margin-top: 45.7vh;
-        margin-right: 47vh;
+    .contactOne{
+        margin-left: 12vh;
+        margin-top: 2vh;
     }
-    .emailName p{
-        padding-top: 46vh;
-        margin-right: 24vh;
+    .inputOne{
+        width: 25vh;
     }
-    .addressName{
-        margin-top: 41.5vh;
-        margin-right: 24vh;
+    .textArea{
+        width: 55vh;
+        height: 20vh;
     }
-    .contactTwo{
-        position: absolute;
-        top: 85%;
-        left: 3.5%;
+    .inputs button{
+        padding: 4px 12px;
+        font-weight: 600;
+        font-size: 15px;
+    }
+    .theIcon{
+        margin-left: -2.2vh;
+    }
+    .contactThree{
+        margin-right: 4vh;
+    }
+    .iconContact{
+        font-size: 5vh !important;
     }
 }
 
 @media (max-width:450px){
-    .contactSection{
-        height: 120vh;
+     .contactOne{
+        margin-top: -30vh;
+        margin-left: 12vh;
     }
-    .contactOne {
-        padding-left: 10vh;
+    .contactTwo{
+        margin-top: 51.6vh;
+        gap: 2.5vh !important
+    }
+    .iconContact{
+        margin-left: -40vh !important;
+    }
+    .contactThree{
+        margin-left: -16vh;
+        margin-right: 35vh;
+        padding-top: 54.6vh;
+    }
+    .theIcon{
+        margin-bottom: 3vh;
+        margin-left: -15vh;
+    }
+    .theIcon p{
+        font-size: 14px !important;
+        font-weight: 700;
+    }
+    .theIcon h3{
+        display: none;
+    }
+} 
+
+@media (max-width:375px){
+    .contact{
+        margin-left: -4vh !important;
     }
     .contactOne h1{
-        font-size: 22px;
-        font-weight: 900;
+        font-size: 19px;
+        font-weight: 800;
     }
-    textarea{
-        width: 38.7vh
+    .inputOne{
+        width: 22.4vh;
     }
-    .contactTwo{
-        position: absolute;
-        top: 103%;
-        left: 10.5%;
+    .textArea{
+        width: 49.8vh;
+        height: 20vh;
     }
-    .phoneNum{
-        margin-top: 67.6vh;
-        margin-right: 10.2vh;
+    .inputs button{
+        padding: 4px 10px;
+        font-weight: 600;
+        font-size: 14px;
     }
-    .emailName h3{
-        margin-top: 64vh;
-        margin-right:23vh;
+    .theIcon{
+        margin-left: -11vh;
     }
-    .emailName p{
-        padding-top: 65vh;
-        margin-right: 2.8vh;
-        font-size: 17px;
-    }
-    .addressName{
-        margin-top: 60vh;
-        margin-right: 2vh;
-    }
-    .addressName p{
-        font-size: 17px;
+    .iconContact{
+        margin-left: -34vh !important;
     }
 }
 
-@media (max-width:365px){
-    .contactOne {
-        padding-left: 3vh;
-    }
-    .contactTwo{
-        position: absolute;
-        top: 103%;
-        left: 4%;
-    }
-    .phoneNum{
-        margin-top: 67.6vh;
-        margin-right: 9vh;
-    }
-    .phoneNum p{
-        font-size: 16px;
-        font-weight: 900;
-    }
-    .emailName h3{
-        margin-top: 64vh;
-        margin-right: 17.5vh;
-    }
-    .emailName p{
-        padding-top: 65vh;
-        margin-right: -0.3vh;
-        font-size: 15px;
-        font-weight: 900;
-    }
-    .addressName{
-        margin-top: 60vh;
-        margin-right: 2vh;
-    }
-    .addressName p{
-        font-size: 14px;
-        font-weight: 900;
-    }
-}
 
 @media (max-width:320px){
-    .contactOne {
-        padding-left: 0vh;
+    .contact{
+        margin-left: -6.5vh !important;
     }
-    .contactTwo{
-        position: absolute;
-        top: 103%;
-        left: -3%;
+    .contactOne{
+        margin-top: -23vh !important
     }
-    .phoneNum{
-        margin-top: 67.6vh;
-        margin-right: 7vh;
+    .contactOne h1{
+        font-size: 16px;
+        font-weight: 800;
     }
-    .emailName h3{
-        margin-top: 64vh;
-        margin-right: 16vh;
+    .inputOne{
+        width: 18.4vh;
+        font-size: 12px;
+        padding-left: 1.2vh
     }
-    .emailName p{
-        padding-top: 65vh;
-        margin-right: -0.8vh;
-        font-size: 14px;
-        font-weight: 900;
+    .textArea{
+        width: 41.8vh;
+        height: 19vh;
+        font-size: 12px;
+
     }
-    .addressName{
-        margin-top: 60vh;
-        margin-right: -1.3vh;
+    .inputs button{
+        padding: 3px 8px;
+        font-weight: 600;
+        font-size: 12px;
+    }
+    .theIcon{
+        margin-left: -4.5vh;
+    }
+    .theIcon p{
+        font-size: 12px !important
+
+    }
+    .iconContact{
+        margin-left: -26vh !important;
+        font-size: 23px !important
+
     }
 }
 </style>

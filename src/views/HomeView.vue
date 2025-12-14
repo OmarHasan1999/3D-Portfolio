@@ -197,11 +197,10 @@ export default {
 })
 
 
-
       let background, planet_2,planet, earthPlanet
 
     // loading 3D background object
-    const house = new URL("../assets/Nebula HDRi 2.glb", import.meta.url)
+    const house = new URL("../assets/stars.glb", import.meta.url)
     const houseLoader = new GLTFLoader()
     houseLoader.load(house.href, (gltf) => {
         background = gltf.scene

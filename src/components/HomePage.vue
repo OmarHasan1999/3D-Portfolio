@@ -3,14 +3,12 @@
 
 <div class="homeSection d-flex flex-row justify-space-between">
 
-  <div class="one" style="margin-left: 30vh; gap: 3.6vh;">
+  <div class="one">
     <strong class="strong" style="color: aliceblue;font-size: 35px;">Hello I'm</strong>
     <h2 class="name">Omar Hasan</h2>
     <h3>Front end Web Developer</h3>
     <p class="par">
-      Main area of my expertise is front-end development and everything related with this
-      side of web. HTML CSS JS, Now, I am currently learning one of the front-end frameworks,
-      Vue.js
+      Front-end focused (HTML, CSS, JS) and currently exploring Vue.js
     </p>
     
     <div class="d-flex align-center allLinks">
@@ -53,13 +51,12 @@ export default {
     overflow: hidden;
   }
 
-  .homeSection{
-    margin-bottom: 5vh;
-  }
-
   .one {
     display: flex;
     flex-direction: column;
+    gap: 1vh;
+    padding-left: 250px;
+    padding-top: 20px;
   }
   .one h2{
     color: rgb(113, 230, 244);
@@ -77,9 +74,10 @@ export default {
   }
   .one .par {
     color: aliceblue;
-    width: 48%;
+    width: 85%;
     font-size: 18px;
     line-height: 28px;
+    padding-bottom: 12px;
   }
 
   .myLinks a{
@@ -109,7 +107,6 @@ export default {
     border-right-width: 2px;
     cursor: pointer;
     pointer-events: auto;
-    margin-top: 0.5vh;
   }
 
   .downloadButton:hover {
@@ -120,83 +117,84 @@ export default {
   /* Responsive section */
 
   @media (max-width:1200px){
-    .name{
-    font-weight: 800 !important ;
-    font-size: 10px;
+    .one {
+    gap: 2vh;
+    padding-left: 200px;
+    padding-top: 20px;
   }
-  .one h3{
-    font-weight: 800 !important;
-  }
-  .allLinks{
-    margin-top: 3.5vh;
-  }
-  .downloadButton{
-    font-weight: 500 !important;
-    font-size: 16px !important;
-    padding: 5px 30px !important;
-  }
-  .one .par {
-    line-height: 31px;
+    .one .par {
+    padding-bottom: 25px;
   }
   }
 
   @media (max-width:1024px){
-    .one{
-      gap: 1.8vh !important;
-    }
-    .homeSection{
-      margin-top: -5vh !important;
-      margin-left: -2vh !important;
-    }
+    .one {
+    gap: 2vh;
+    padding-top: 50px;
+    padding-right: 100px;
+  }
+    .one .par {
+    padding-bottom: 25px;
+  }
   }
 
   @media (max-width:991px){
     .one{
-      gap: 2.4vh !important;
+        gap: 2vh;
+        padding-bottom: 120px;
+        padding-right: 100px;
+    }
+  }
+
+  @media (max-width:900px){
+        .one .par{
+      width: 60%;
+    }
+    .one{
+        gap: 2vh;
+        padding-right: 150px;
     }
   }
 
   @media (max-width:768px){
-    .one{
-      gap: 0.3vh !important;
-      margin-top: 5vh;
-    }
-    .one .par{
-      text-align: left !important;
-      font-size: 16px !important;
-      line-height: 25px !important;
-    }
-    .one .strong{
-      font-size: 30px !important;
-      margin-left: -7vh !important;
-      font-weight: 700;
-    }
-    .one h2{
-      margin-left: -7vh !important;
-      margin-top: 1.7vh !important;
-    }
-    .one h3{
-      font-weight: 900 !important;
-      font-size: 18px !important;
-      margin-left: -7vh !important;
+   .one{
+    align-items: center;
+    justify-content: center;
+    gap: 2vh;
+    padding-top: 130px;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    width: 100%;
+   }
+   
+   .one h2,
+   .one h3,
+   .one .strong,
+   .one .par {
+    margin: 0;
+    padding: 0 20px;
+   }
+   
+   .one .par {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+   }
+   
+   /* .allLinks {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vh;
+   } */
+   
+   .myLinks {
+    margin-left: 0;
+    justify-content: center;
+   }
   }
-  .downloadButton{
-      padding: 5px 15px !important ;
-      font-size: 14px !important;
-      font-weight: 700 !important;
-      margin-top: -1vh !important;
-      margin-left: -7.3vh !important; 
-  }
-  .myLinks{
-      margin-top: -9.3vh !important;
-      margin-left: 5vh !important;
-  }
-  .myLinks a{
-      font-size: 16px !important; 
-      margin-right: -1vh;
-  }
-  }
-
+/*
   @media (max-width:617px){
     .one .strong{
       font-size: 30px !important;
@@ -380,7 +378,7 @@ export default {
       margin-right: -1vh;
   }
 */
-  }
+/* } */
 
  
 </style>

@@ -309,18 +309,18 @@ export default {
 
   else if(window.innerWidth <= 768){
     laptop.scale.set(0.9, 1, 0.9); 
-    laptop.position.set(22, -3, 17);
+    laptop.position.set(10, 3, 8);
     planet_2.position.set(20, 6, 20)
   }
 
   else if(window.innerWidth <= 991){
     skillsObjectRef.value.position.set(40, -230, -300)
     planet_2.position.set(20, 6, 20)
-    laptop.position.set(22, -3.4, 18);
+    laptop.position.set(22, -2.6, 16);
     laptop.scale.set(0.9, 1.1, 1.1); 
   }
   else if(window.innerWidth <= 1024){ 
-    laptop.position.set(22, -3.4, 18.8);
+    laptop.position.set(22, -3.4, 16);
     laptop.scale.set(1, 1.1, 1); 
     planet_2.position.set(22, 6, 22)
     skillsObjectRef.value.position.set(30, -223, -300)
@@ -330,14 +330,14 @@ export default {
   else if(window.innerWidth <= 1200){ 
   homeObjectRef.value.position.set(38, 2.3, 11);
   skillsObjectRef.value.position.set(0, -230, -300)
-  laptop.position.set(22, -4, 20.4);
+  laptop.position.set(22, -2.7, 17);
   laptop.scale.set(1.1, 1.2, 1.1); 
   planet_2.position.set(22, 6, 25)
 
   }
   
   else {
-    laptop.position.set(25, -4.9, 22);
+    laptop.position.set(20, -3, 17);
     laptop.scale.set(1.2, 1.3, 1.2); 
     laptop.rotation.y = 4.3
 
@@ -408,7 +408,7 @@ export default {
 <style lang="css">
 
 .theContainer {
-  display:none
+  display:none;
 }
 
 .loadingPage{

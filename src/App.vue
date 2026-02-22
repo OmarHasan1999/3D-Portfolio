@@ -27,8 +27,6 @@ provide("scrollDown", scrollDown)
   padding: 0;
   scrollbar-width: none;
   scroll-behavior: smooth;
-  
-
 }
 
   body{

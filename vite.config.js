@@ -11,7 +11,21 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
- 
+  define: {
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false  
+  },
+   build: {
+    chunkSizeWarningLimit: 2000,    
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'three': ['three'],        
+          'gsap': ['gsap'],        
+          'vuetify': ['vuetify'],    
+        }
+      }
+    }
+  }
 
 })
 

@@ -5,7 +5,7 @@
             <div class="app-bar">
               <div class="links">
                 <a class="routers" href="/" @click.prevent="homePage">
-                   Home
+                  Home
                 </a>
                 <a class="routers" href="/Skills" @click.prevent="skillsPage">
                   Skills
@@ -14,7 +14,7 @@
                   Projects
                 </a>
                 <a class="routers" href="/Contact" @click.prevent="contactPage">
-                   Contact
+                  Contact
                 </a>
                 
               </div>
@@ -52,27 +52,31 @@ export default {
   }
 
   .app-bar {
-    padding-top: 44rem;
-    padding-bottom: 1rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    /* z-index: 1000000; */
+    padding: 0%;
+    margin: 0%;
   }
 
   .links {
-    margin-left: -4vh;
+    margin: 0;
     display: flex;
-    gap: 15.5vh;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0px 7px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    gap: 90px;
   }
 
   .links a {
     text-decoration: none;
     color: aliceblue;
-    margin-left: 25px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     transition: 0.2s ease;
     display: flex;
@@ -81,6 +85,7 @@ export default {
     pointer-events: auto;
     padding: 0;
     display: inline-block;
+    white-space: nowrap;
   }
 
   .links .routers:hover {
@@ -93,44 +98,11 @@ export default {
     color: aqua;
   }
 
-
-.links a.router-link-exact-active {
-  color: aqua;
-    }
-
     /* responsive */
-    @media (min-width:2560px){
-      .app-bar {
-        padding-bottom: 10rem;
+   @media (max-width:500px) {
+    .links{
+      left: -16px;
     }
-  }
-    @media (max-width:1200px){
-      .app-bar {
-        padding-bottom: 8rem;
-    }
-  }
-  @media (max-width:1024px){
-      .app-bar {
-        padding-bottom: 9rem;
-    }
-  }
-  @media (max-width:768px){
-      .app-bar {
-        padding-left: -2rem !important;
-    }
-    .links a{
-      font-size: 17px !important;
-
-    }
-  }
-  @media (max-width:617px){
-    .app-bar {
-        margin-left: -0.5rem !important;
-    }
-  }
-  @media (max-width:320px){
-    .app-bar {
-        margin-left: -0.9rem !important;
-    }
-  }
+    
+   }
 </style> 

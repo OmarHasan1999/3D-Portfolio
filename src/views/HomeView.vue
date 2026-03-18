@@ -27,22 +27,18 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, nextTick } from 'vue';
 import HeaderPage from '../components/HeaderPage.vue';
-import { nextTick } from 'vue';
 import HomePage from '../components/HomePage.vue';
 import SkillsPage from '../components/SkillsPage.vue';
 import ProjectsPage from '../components/ProjectsPage.vue';
 import ContactPage from '../components/ContactPage.vue';
-
 
 export default {
   components: { HeaderPage, HomePage, SkillsPage, ProjectsPage, ContactPage },
   setup(){
     const theContainer = ref(null);
     const headerObjectRef = ref(null);
-    const homeObjectRef = ref(null);
-    const skillsObjectRef = ref(null);
     let scene, camera, renderer, labelRender
 
     const moveCamera = (x, y, z) => {
@@ -156,21 +152,18 @@ export default {
           scene.add(headerObject);
           headerObject.position.set(38, 17.2, 8.7);
           headerObjectRef.value = headerObject;
-          //adjustModelScale()
 
         // add home page to scene
           const home = document.querySelector(".homePage")
           const homeObject = new CSS2DObject(home);
+          homeObject.position.set(38, 2.3, 8.7);
           scene.add(homeObject);
-          homeObjectRef.value = homeObject
-          adjustModelScale()
 
         // add skills to scene
           const skillsPage = document.querySelector(".skillsPage")
           const skillsObj = new CSS2DObject(skillsPage)
+          skillsObj.position.set(0, -260, -300)
           scene.add(skillsObj)
-          skillsObjectRef.value = skillsObj
-          adjustModelScale()
 
           // add projects page to scene
           const projectsPage = document.querySelector(".projectsPage")
@@ -186,6 +179,7 @@ export default {
       })
 
 
+      // adding 3D laptop model
       let laptop
       const theObj = new URL("../assets/3d_clipart_-_webdev.glb",import.meta.url)
       const theObjLoad = new GLTFLoader()
@@ -193,10 +187,11 @@ export default {
         laptop = gltf.scene
         adjustModelScale()
         scene.add(laptop);
+        
 
 })
 
-
+      // adding 3D background objects
       let background, planet_2,planet, earthPlanet
 
     // loading 3D background object
@@ -252,33 +247,14 @@ export default {
 
   })
 
-
+  // function to adjust the scale and position of the 3D models based on screen size
   function adjustModelScale() {
   if (!planet) return;
   if (!planet_2) return;
-  if(!homeObjectRef.value) return
-  if(!skillsObjectRef.value) return
-
-  if (window.innerWidth <= 320) {
-    laptop.position.set(8, -3.4, 9.3);
-    laptop.rotation.y = 4.3
-    laptop.scale.set(0.2, 0.3, 0.2);
-
-    planet.position.set(4.7, 2, -5)
-    planet.scale.set(2.5, 15.5, 10)
-    planet.rotation.set(5,-2,6)
-
-    planet_2.position.set(20, 6, 13)
-    planet_2.scale.set(1,1,1)
-    planet_2.rotation.set(5,5,5)
-
-    earthPlanet.position.set(-7, -15, -4.8);
-    earthPlanet.scale.set(2.4, 2.5, 2.4)
-  } 
 
   else if (window.innerWidth <= 375) {
-    laptop.scale.set(0.6, 0.7, 0.6); 
-    laptop.position.set(22, -8.2, 10.5);
+    laptop.scale.set(0.46, 0.5, 0.45); 
+    laptop.position.set(10, -3.3, 8.9);
 
     planet.position.set(4.7, 2, -6.5)
     planet.scale.set(3.6, 16.6, 11.3)
@@ -287,52 +263,58 @@ export default {
     planet_2.position.set(20, 6, 14)
     planet_2.scale.set(0.8,0.8,0.8)
 
-    earthPlanet.position.set(-7, -15.5, -5.4);
-    earthPlanet.scale.set(2.6, 2.6, 2.6)
+    earthPlanet.position.set(-7.5, -15, -5.4);
+    earthPlanet.scale.set(2.2, 2.66, 2.6)
 
   }
 
   else if(window.innerWidth <= 450){
     planet_2.position.set(20, 6, 14)
     planet_2.scale.set(0.8,0.8,0.8)
-    laptop.scale.set(0.6, 0.7, 0.6); 
-    laptop.position.set(22, -5, 14);
-    earthPlanet.position.set(-7, -15.9, -5);
-
+    laptop.scale.set(0.5, 0.5, 0.5); 
+    laptop.position.set(10, -3.3, 8.8);
+    earthPlanet.position.set(-7, -15.5, -4.8);
+    earthPlanet.scale.set(2.3, 2.8, 2.5)
   }
 
   else if(window.innerWidth <= 617){
-    laptop.scale.set(0.7, 0.9, 0.7); 
-    laptop.position.set(22, -3, 16);
+    laptop.scale.set(0.58, 0.56, 0.5); 
+    laptop.position.set(10, -3.3, 8.7);
     planet_2.position.set(20, 6, 17)
+    earthPlanet.position.set(-7, -15.5, -4.8);
+    earthPlanet.scale.set(3, 3, 3)
   }
 
   else if(window.innerWidth <= 768){
-    laptop.scale.set(0.9, 1, 0.9); 
-    laptop.position.set(10, 3, 8);
+    laptop.scale.set(0.7, 0.6, 0.5); 
+    laptop.position.set(10, -3.3, 9);
     planet_2.position.set(20, 6, 20)
+    earthPlanet.position.set(-7, -15.4, -4.8);
+    earthPlanet.scale.set(3, 3, 3)
+
   }
 
   else if(window.innerWidth <= 991){
-    skillsObjectRef.value.position.set(40, -230, -300)
     planet_2.position.set(20, 6, 20)
-    laptop.position.set(22, -2.6, 16);
-    laptop.scale.set(0.9, 1.1, 1.1); 
+    laptop.position.set(22, -2, 16);
+    laptop.scale.set(1.1, 1.4, 1.1); 
+    earthPlanet.position.set(-7, -16, -4.8);
+    earthPlanet.scale.set(3, 3, 3)
   }
   else if(window.innerWidth <= 1024){ 
-    laptop.position.set(22, -3.4, 16);
-    laptop.scale.set(1, 1.1, 1); 
+    laptop.position.set(20, -2, 15);
+    laptop.scale.set(1.1, 1.4, 1.1); 
     planet_2.position.set(22, 6, 22)
-    skillsObjectRef.value.position.set(30, -223, -300)
+    earthPlanet.position.set(-7, -15, -4.8);
+    earthPlanet.scale.set(3, 3, 3)
 
   }
 
   else if(window.innerWidth <= 1200){ 
-  homeObjectRef.value.position.set(38, 2.3, 11);
-  skillsObjectRef.value.position.set(0, -230, -300)
-  laptop.position.set(22, -2.7, 17);
-  laptop.scale.set(1.1, 1.2, 1.1); 
+  laptop.position.set(22, -1.4, 17);
+  laptop.scale.set(1.1, 1.3, 1.1); 
   planet_2.position.set(22, 6, 25)
+  earthPlanet.scale.set(3, 3, 3)
 
   }
   
@@ -352,8 +334,6 @@ export default {
     earthPlanet.scale.set(3, 3, 3)
     earthPlanet.position.set(-7, -15.9, -6);
 
-    homeObjectRef.value.position.set(38, 2.3, 8.7);
-    skillsObjectRef.value.position.set(0, -260, -300)
 
   }
 }
@@ -365,16 +345,16 @@ export default {
 
 
         if(laptop){
-            laptop.rotation.y += 0.001
+            laptop.rotation.y += 0.0014
         }
 
         if(earthPlanet){
-            earthPlanet.rotation.y += 0.001
+            earthPlanet.rotation.y += 0.002
         }
         
 
         if(background){
-            background.rotation.z += 0.0005
+            background.rotation.z += 0.0004
         }
         if(planet_2){
             planet_2.rotation.x += 0.001
@@ -390,9 +370,7 @@ export default {
     renderer.setSize(window.innerWidth, window.innerHeight)
     labelRender.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(window.devicePixelRatio);
-    if(laptop && planet && planet_2 && homeObjectRef &&
-      skillsObjectRef
-    ) adjustModelScale()
+    if(laptop && planet && planet_2) adjustModelScale()
 })
 })
 
@@ -434,7 +412,6 @@ export default {
 }
 
 .heading{
-    /* opacity: 0; */
     animation: heading 1.3s ease-in forwards;
 }
 
@@ -451,411 +428,19 @@ export default {
 }
 }
 
-  .homePage{
-    width:100%;
-    height: 100%;
-    position: absolute;
-    margin: 0%;
-    padding: 0%;
-    scroll-behavior: smooth;
-    overflow: hidden;
-  }
-  .homeSection{
-    padding-top: 33vh;
-  }
-  .one{
-    display: flex;
-    flex-direction: column;
-  }
-  .par{
-    color: aliceblue;
-    width: 55%;
-  }
-  .myLinks a{
-    color: aliceblue;
-    font-size: 20px;
-    text-decoration: none;
-    padding-left: 15px;
-  }
-  .myLinks{
-    margin-left: 32px;
-    transition: 0.3s ease;
-  }
-  .myLinks a:hover{
-    color:aqua
-  }
-  .downloadButton{
-    background-color: transparent;
-    border: 1px solid aqua;
-    border-radius: 20px;
-    color:aqua;
-    padding: 7px 30px ;
-    font-weight: 600;
-    text-align: center;
-    border-left-width: 2px;
-    border-right-width: 2px;
-  }
-  .backgroundImage{
-    position: absolute;
-    top: 0%;
-    left: 5%;
-  }
-
   @media (max-width:1200px){
-    .homePage{
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-
-  .homeSection{
-    padding-left: -15vh;
-    margin-left: -10vh;
-  }
-  .one{
-    display: flex;
-    flex-direction: column;
-    font-size: 16px;
-  }
-  .one h1{
-    font-size: 24px;
-  }
-  .homePage .homeSection .one h2{
-    font-size: 26px !important;
-  }
-  .homePage .homeSection .one h3{
-    font-size: 25px !important;
-  }
-  .par{
-    color: aliceblue;
-    width: 53%;
-    font-size: 18px;
-  }
-  .myLinks a{
-    color: aliceblue;
-    font-size: 20px;
-    text-decoration: none;
-    padding-left: 15px;
-  }
-  .myLinks{
-    margin-left: 32px;
-    transition: 0.3s ease;
-    margin-top: -3vh;
-  }
-  .myLinks a:hover{
-    color:aqua
-  }
-  .downloadButton{
-    background-color: transparent;
-    border: 1px solid aqua;
-    border-radius: 20px;
-    color:aqua;
-    padding: 7px 30px ;
-    font-weight: 900;
-    font-size: 20px;
-    text-align: center;
-    border-left-width: 2px;
-    border-right-width: 2px;
-    margin-top: -3vh;
-  }
-  .backgroundImage{
-    margin-left: -12vh;
-    margin-top: -15vh;
-  }
+    
+    
   }
 
   @media (max-width:1024px){
-    .homePage{
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
+    
+    
   }
 
   @media (max-width:991px){
-    .homeSection{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      margin-left: -12vh;
-    }
-    .homePage{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-  .one h1{
-    font-size: 23px;
+    
+    
   }
-  .homePage .homeSection .one h2{
-    font-size: 25px !important;
-  }
-  .homePage .homeSection .one h3{
-    font-size: 23px !important;
-  }
-  .par{
-    font-size: 17px;
-  }
-  }
-
-
-
-  @media (max-width:768px){
-    .homeSection{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      margin-left: -2vh;
-    }
-    .homePage{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width:100%;
-      height: 100%;
-      margin: 0%;
-      padding: 0%;
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-    .par{
-      color: aliceblue;
-      width: 86%;
-      margin-top: 1.7vh;
-      margin-left: -7.2vh;
-      text-align: center;
-      font-size: 15px;
-    }
-     .one h1{
-      margin-left: 28vh;
-    }
-
-    .one h2{
-      font-size: 30px;
-      margin-left: 26vh;
-
-    }
-    .one h3{
-      font-size: 18px;
-      margin-left: 13vh;
-      margin-top: 2vh;
-    }
-    .downloadButton{
-      margin-left: 19vh;
-      margin-bottom: 8vh;
-  }
-  .myLinks{
-      margin-top: 7vh;
-      margin-left: -35vh;
-  }
-  .backgroundImage{
-    margin-bottom: 50vh;
-  }
-
-  }
-
-
-  @media (max-width:617px){
-    .homeSection{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .homePage{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width:100%;
-      height: 100%;
-      margin: 0%;
-      padding: 0%;
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-    .one h1{
-      margin-left: 16vh;
-
-    }
-    .homePage .homeSection .one h2{
-      margin-top: 1vh;
-      margin-left: 15vh;
-    }
-    .one h3{
-      font-size: 18px;
-      margin-left: 2vh;
-    }
-    .par{
-      color: aliceblue;
-      width: 100%;
-      margin-left: -12.2vh;
-      margin-top: 2vh;
-      text-align: center;
-    }
-    .downloadButton{
-      margin-left: 9vh;
-  }
-  .backgroundImage{
-    margin-top: -20vh;
-  }
-  }
-
-  @media (max-width:450px){
-    .homeSection{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .homePage{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width:100%;
-      height: 100%;
-      margin: 0%;
-      padding: 0%;
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-    .one h1{
-      margin-left: 2vh;
-    }
-    .one h2{
-      position: absolute;
-      top: 41.2%;
-      left: 18.7%;
-      font-size: 30px;
-      width: 100%;
-    }
-    .one h3{
-      font-size: 18px;
-      margin-left: -13vh;
-      margin-top: 8vh;
-    }
-    .par{
-      color: aliceblue;
-      width: 125%;
-      margin-left: -19.6vh;
-      margin-top: 1vh;
-    }
-    .downloadButton{
-      margin-left: -5vh;
-      padding: 5px 17px;
-      margin-top: -3vh;
-  }
-   .myLinks{
-      padding-left: 2vh;
-  }
-  .backgroundImage{
-    margin-top: -42vh;
-  }
-  }
-
-  @media (max-width:365px){
-    .homeSection{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .homePage{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width:100%;
-      height: 100%;
-      margin: 0%;
-      padding: 0%;
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-    .one h1{
-      position: relative;
-      margin-left: -6vh;
-    }
-    .one h2{
-      position: absolute;
-      top: 42.2%;
-      left: 12%;
-      font-size: 30px;
-      margin-top: 1vh;
-    }
-    .homePage .homeSection .one h3{
-    font-size: 20px !important;
-    margin-left: -16vh;
-    margin-top: 9vh;
-    width: 160%;
-  }
-  .par{
-      width: 155%;
-      margin-left: -22.3vh;
-      font-size: 13px;
-      margin-top: 1vh;
-    }
-    .downloadButton{
-      margin-left: -12vh;
-  }
-  .backgroundImage{
-    margin-top: -43vh;
-  }
-
-  }
-
-
-  @media (max-width:320px){
-    .homeSection{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .homePage{
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      width:100%;
-      height: 100%;
-      margin: 0%;
-      padding: 0%;
-      overflow: hidden;
-      overflow-x: hidden;
-      overflow-y: hidden;
-    }
-    .one h1{
-      margin-left: -9vh;
-    }
-    .one h2{
-      position: absolute;
-      top: 41.8%;
-      left: 7.3%;
-    }
-    .homePage .homeSection .one h3{
-    margin-left: -20vh;
-    margin-top: 8vh;
-    width: 170%;
-    font-style: 16px;
-  }
-  .par{
-      width: 180%;
-      margin-left: -24.3vh;
-      font-size: 13px;
-      margin-top: 2vh;
-    }
-    .downloadButton{
-      padding: 5px 12px ;
-      font-weight: 400;
-      font-size: 17px;
-      margin-right: 3vh;
-  }
-  .myLinks{
-      padding-left: -3vh;
-  }
-
-  }
-
 
 </style>

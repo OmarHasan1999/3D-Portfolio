@@ -1,56 +1,72 @@
 <template>
 
-    <div class="skills" v-if="!showMenu">
+    <div class="skills">
 
-    <div class="skillsSection" >
+    <div class="skills-section" >
 
-
-       <div class="development">
+      <div class="skill-group">
         <h3>Development</h3>
-        <div class="developmentLang">
-            <div class="html"> <span>Html</span></div>
-            <div class="html">Css</div>
-            <div class="html">Scss</div>
-            <div class="html">JavaScript</div>
-            <div class="html">Vue</div>
+        <div class="skill-tags">
+          <div class="skill-tag">
+            <img alt="HTML icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" />
+            <span>HTML</span>
+          </div>
+          <div class="skill-tag">
+            <img alt="CSS icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" />
+            <span>CSS</span>
+          </div>
+          <div class="skill-tag">
+            <img alt="SCSS icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sass/sass-original.svg" />
+            <span>SCSS</span>
+          </div>
+          <div class="skill-tag">
+            <img alt="JavaScript icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" />
+            <span>JavaScript</span>
+          </div>
+          <div class="skill-tag">
+            <img alt="Vue icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" />
+            <span>Vue</span>
+          </div>
+        </div>
         </div>
 
-        <div class="tools">
+         <div class="skill-group">
         <h3>Tools</h3>
-        <div class="toolsLang">
-            <div class="html">GitHub</div>
-            <div class="html">Visual Studio</div>
-            <div class="html">NPM</div>
-            <div class="html">Node</div>
+        <div class="skill-tags">
+          <div class="skill-tag">
+            <img alt="GitHub icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" style="filter: invert(1);" />
+            <span>GitHub</span>
+          </div>
+          <div class="skill-tag">
+            <img alt="VS Code icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" />
+            <span>VS Code</span>
+          </div>
+          <div class="skill-tag">
+            <img alt="NPM icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" />
+            <span>NPM</span>
+          </div>
+          <div class="skill-tag">
+            <img alt="Node.js icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" />
+            <span>Node</span>
+          </div>
         </div>
+      </div>
 
-        <div class="design">
+      <div class="skill-group">
         <h3>Design</h3>
-        <div class="designTool">
+        <div class="skill-tags">
+          <div class="skill-tag">
+            <img alt="Figma icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" />
             <span>Figma</span>
+          </div>
         </div>
-        </div>
-
+      </div>
       
         </div>
 
       </div>
-
-      <div class="img">
-        <img src="../assets/code-1970468_1280.png">
-      </div>
-
-
-      </div>
-
-      </div>
-
 </template>
-
-
 <script>
-// import ScrollReveal from 'scrollreveal';
-
 export default {
     data() {
       return {
@@ -60,7 +76,6 @@ export default {
     methods: {
       
     },
-    inject: ['showMenu'],
 
     
   mounted() {
@@ -75,207 +90,142 @@ export default {
     .skills{
         width:100%;
         height: 100vh;
-        pointer-events: auto;
-        scroll-behavior: smooth;
-        margin-left: -20vh;
-        overflow: hidden;
-
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        padding-bottom: 18vw;
+        padding-right: 12vw;
     }
   
-    .skillsSection{
-      align-items: center;
-      display:flex;
-      flex-direction: column;
-    }
-    .development{
-      display:flex;
-      flex-direction: column;
-    }
-    .development h3{
-      color:rgb(203, 190, 203);
-      font-size: 25px;
-      font-weight: 700;
-      margin-bottom: 4vh;
-    }
-    .developmentLang{
+    .skills-section{
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 2vh
-    }
-      
-    .html{
-      padding: 12px 25px;
-      border: 1px solid transparent;
-      border-radius: 7px;
-      font-size: 18px;
-      color:rgb(94, 236, 236);
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.52) 70%, rgba(0, 0, 0, 0.539) 30%);
-    }
-    .tools{
-      display:flex;
       flex-direction: column;
-      margin-top: 6vh;
+      align-items: flex-start;
+      gap: 3vh;
+      padding: 0 16px;
     }
-     .img img{
-      width: 90vh;
-      margin-left: 30vh;
-      margin-top: -60vh;
-      opacity: 0.09; 
-    }
-    .tools h3{
-      color:rgb(203, 190, 203);
-      font-size: 25px;
-      font-weight: 700;
-      margin-bottom: 4vh;
-    }
-    .toolsLang{
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 2vh
-    }
-
-    .design{
-      display:flex;
-      flex-direction: column;
-      margin-top: 6vh;
-    }
-    .designTool span{
-      padding: 12px 25px;
-      font-size: 18px;
-      border: 1px solid transparent;
-      border-radius: 7px;
-      color:rgb(94, 236, 236);
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.52) 70%, rgba(0, 0, 0, 0.539) 30%);
-    }
-
-  @media (max-width:1200px){
-    .oneSkills{
+    .skill-group {
     display: flex;
     flex-direction: column;
-    padding-left: 0vh;
-  }
-  .skills{
-    overflow-x: hidden;
-    overflow-y: hidden;
-  }
-
-  }
-
-  @media (max-width:1024px){
+    gap: 2vh;
+}
     
+    .skill-group h3 {
+    color: rgb(203, 190, 203);
+    font-size: 22px;
+    font-weight: 700;
+}
 
-  }
+    .skill-tags {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;      
+    gap: 14px;
+}
 
+    .skill-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    border: 1px solid rgba(0, 255, 255, 0.15);
+    border-radius: 10px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.52), rgba(0,0,0,0.54));
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    cursor: default;
+    min-width: 70px;
+}
 
-  @media (max-width:991px){
-   
-  }
+.skill-tag:hover {
+    border-color: rgba(0, 255, 255, 0.6);  
+    transform: translateY(-3px);
+}
 
+.skill-tag img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
 
-  @media (max-width:768px){
-    .skills{
-    margin-left: -5vh !important;
-    margin-top: -5vh !important;
-  }
-  h3{
-    margin-left: 0vh !important;
-  }
-  .img img{
-      margin-left: 17vh;
-    }
-    .html{
-      padding: 8px 21px;
-      font-size: 17px;
-    }
-    .designTool span{
-      font-size: 16px;
-      padding: 8px 21px;
-    }
-  }
+.skill-tag span {
+    font-size: 14px;
+    color: rgb(94, 236, 236);
+    text-align: center;
+}
 
-
-  @media (max-width:617px){
-    .skills{
-    margin-top: 1vh !important;
+/* Responsive */
+@media (max-width: 1000px) {
+    .skills {
+        padding-right: 25vw;
+    }
+}
+@media (max-width: 800px) {
+    .skills {
+        padding-right: 33vw;
+        padding-bottom: 25vw;
+    }
+}
+@media (max-width: 767px) {
+    .skills {
+        padding-right: 23vw;
+        padding-bottom: 35vw;
+    }
+    
+}
+@media (max-width: 665px) {
+    .skills {
+        padding-right: 18vw;
+        padding-bottom: 38vw;
+    }
+    
+}
+@media (max-width: 625px) {
+  .skills {
+        padding-right: 20vw;
+        padding-bottom: 45vw;
+    }
+    .skill-tag {
+        min-width: 60px;
+        padding: 10px 14px;
+    }
+    .skill-tag img {
+        width: 28px;
+        height: 28px;
+    }
+    .skill-tag span {
+        font-size: 12px;
+    }
+}
+@media (max-width: 500px) {
+  .skills {
+        padding-right: 16vw;
+        padding-bottom: 54vw;
+    }
+}
+@media (max-width: 450px) {
+  .skills {
+        padding-right: 12vw;
+        padding-bottom: 60vw;
+    }
+  .skills-section{
+        padding-right: -7vw;
+        margin-left: -7vw;
   }
-    .html{
-      padding: 5px 16px;
-      font-size: 15px;
+  .skill-tags {
+    gap: 7px;
+}
+}
+@media (max-width: 400px) {
+  .skills {
+        padding-bottom: 78vw;
     }
-    .designTool span{
-      font-size: 16px !important;
-      padding: 8px 19px;
-
-    }
-    .img img{
-      margin-left: 13vh;
-    }
-    .skillsSection h3{
-      font-size: 20px;
-      font-weight: 700;
-    }
+  .skills-section{
+        margin-left: -6vw;
   }
-
-  @media (max-width:450px){
-    .skills{
-    margin-left: -2.5vh !important;
-  }
-  .html{
-      padding: 3px 12px;
-      font-size: 14px;
-      margin-right: -1vh;
-    }
-    .designTool span{
-      font-size: 16px !important;
-      padding: 8px 19px;
-    }
-    .img img{
-      margin-left: 1vh;
-      width: 80vh;
-    }
-  }
-
-  @media (max-width:375px){
-    .skillsSection{
-      margin-left: -2vh;
-      
-    }
-    .img img{
-      margin-left: 0.7vh;
-      width: 55vh;
-      height: 50vh;
-    }
-    .html{
-      padding: 3px 10px;
-      font-size: 12px;
-      margin-right: -1vh;
-    }
-    .designTool span{
-      font-size: 12px !important;
-      padding: 5px 10px;
-    }
-  }
-
-  @media (max-width:320px){
-    .html{
-      padding: 3px 8px;
-      font-size: 11px;
-      margin-right: -1vh;
-    }
-    .designTool span{
-      font-size: 11px !important;
-      padding: 5px 8px;
-    }
-    .skillsSection{
-      margin-left: -6vh;
-    }
-    .skillsSection h3{
-      font-size: 18px !important
-    }
-    .developmentLang, .toolsLang{
-      gap: 1.6vh
-    }
-  }
+  .skill-tags {
+    gap: 3px;
+}
+}
 </style>

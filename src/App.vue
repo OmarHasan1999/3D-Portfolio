@@ -1,18 +1,5 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import { ref, provide } from 'vue';
-
-const showMenu = ref(false)
-const scrollDown = ref(false)
-
-const showLinks = () => {
-  showMenu.value = !showMenu.value
-}
-
-provide("showMenu", showMenu)
-provide("showLinks", showLinks)
-provide("scrollDown", scrollDown)
-
 
 </script>
 
@@ -31,7 +18,7 @@ provide("scrollDown", scrollDown)
 
   body{
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     width: 100%;
     min-height: 100vh;
     margin: 0%;
